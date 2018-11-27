@@ -1,0 +1,48 @@
+// 定义LED灯针脚号
+const int ledPin =  13;
+// 定义LED灯点亮状态
+int ledState = LOW;
+// 定义上一次loop到当前loop的时间间隔，
+// 数值类型为毫秒，
+// 变量类型为无符号长整型。
+unsigned long previousMillis = 0;
+// 定义常量来表示固定的时间间隔，
+// 此处为1000毫秒，也即1秒钟，
+// 变量类型为长整型。
+const long interval = 1000;
+
+// 对Arduino电路板或相关状态进行初始化方法
+void setup() {
+  // 设置LED针脚类型为状态输出针脚
+  pinMode(ledPin, OUTPUT);
+
+}
+// 系统调用，无限循环方法
+void loop() {
+  // 记录程序执行到此处的时间，
+  // 数值类型为毫秒，
+  // 变量类型为无符号长整型。
+  unsigned long currentMillis = millis();
+
+  // 判断当前的时间与上一次记录时间的时间
+  // 间隔是否大于等于internal数值，
+  // 此处的internal是我们自定义的时间间隔。
+  // 如果大于等于internal数值，则执行内部操作，
+  // 否则进入下一次loop循环。
+  if (currentMillis - previousMillis >= interval) {
+    // 更新previousMillis变量数值，
+    // 也即更新上一次时间记录为
+    // 当前时间。
+    previousMillis = currentMillis;
+    // 判断LED灯状态，并进行更改，
+    // 如果为亮，则变为灭。
+    // 如果为灭，则变为亮。
+    if (ledState == LOW) {
+      ledState = HIGH;
+    } else {
+      ledState = LOW;
+    }
+    // 将LED状态变量的更改结果发送给LED灯元器件。
+    digitalWrite(ledPin, ledState);
+  }
+}
