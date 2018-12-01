@@ -1,0 +1,19 @@
+
+#include <Arduino.h>
+
+void setup()
+{
+  Serial.begin(9600);
+}
+void loop()
+{
+  static unsigned long last_m = millis();
+  unsigned long now = millis();
+  for (int w = 0; w < 40; w++) //
+  {
+    if (now - last_m > 1000) {   last_m =millis();       }
+    Serial.println(last_m);    
+    delay(500);
+  }
+}
+
