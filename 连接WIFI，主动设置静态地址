@@ -1,0 +1,30 @@
+连接WIFI，主动设置静态地址
+
+#include <ESP8266WiFi.h>
+const char* ssid = "dongdong";
+const char* password = "dongdong";
+String name="DD_Station_01";
+IPAddress staticIP(192,168,1,22);
+IPAddress gateway(192,168,1,9);
+IPAddress subnet(255,255,255,0);
+void setup(void)
+{
+  Serial.begin(115200);
+  Serial.println();
+  Serial.printf("Connecting to %s\n", ssid);
+  WiFi.begin(ssid, password);
+  WiFi.config(staticIP, gateway, subnet);
+  // 修改主机名
+  WiFi.hostname(name);
+  Serial.printf("New hostname: %s\n", WiFi.hostname().c_str());
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+  Serial.print("Connected, IP address: ");
+  Serial.println(WiFi.localIP());   // 分配的动态地址&自己设置的静态地址
+  Serial.printf("SSID: %s\n", WiFi.SSID().c_str());// 连接的WIFI名
+}
+void loop() {}
